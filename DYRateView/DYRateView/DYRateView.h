@@ -56,5 +56,6 @@ typedef enum {
 @protocol DYRateViewDelegate
 
 - (void)rateView:(DYRateView *)rateView changedToNewRate:(NSNumber *)rate;
+- (void)rateView:(DYRateView *)rateView rateEnded:(NSNumber *)rate;
 
 @end

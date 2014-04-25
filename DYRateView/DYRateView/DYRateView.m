@@ -60,7 +60,7 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
 
         _fullStarImage = [fullStarImage retain];
         _emptyStarImage = [emptyStarImage retain];
-        
+
         [self commonSetup];
     }
     return self;
@@ -190,6 +190,10 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
     [self handleTouchAtLocation:touchLocation];
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self notifyDelegateTouchesEnded];
+}
+
 - (void)notifyDelegate {
     if (self.delegate && [self.delegate respondsToSelector:@selector(rateView:changedToNewRate:)]) {
         [self.delegate performSelector:@selector(rateView:changedToNewRate:)
@@ -197,4 +201,10 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
     }
 }
 
+-(void)notifyDelegateTouchesEnded {
+     if (self.delegate && [self.delegate respondsToSelector:@selector(rateView:rateEnded:)]) {
+        [self.delegate performSelector:@selector(rateView:rateEnded:)
+                            withObject:self withObject:[NSNumber numberWithFloat:self.rate]];
+    }
+}
 @end
