@@ -46,10 +46,12 @@ typedef enum {
 @property(nonatomic, assign) BOOL editable;
 @property(nonatomic, retain) UIImage *fullStarImage;
 @property(nonatomic, retain) UIImage *emptyStarImage;
+@property(nonatomic, retain) NSMutableArray *multipleStars;
 @property(nonatomic, assign) NSObject<DYRateViewDelegate> *delegate;
 
 - (DYRateView *)initWithFrame:(CGRect)frame;
 - (DYRateView *)initWithFrame:(CGRect)rect fullStar:(UIImage *)fullStarImage emptyStar:(UIImage *)emptyStarImage;
+- (DYRateView *)initWithFrame:(CGRect)frame size:(int)totalStars;
 
 @end
 

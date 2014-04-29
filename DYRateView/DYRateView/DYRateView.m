@@ -47,6 +47,7 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
 @synthesize fullStarImage = _fullStarImage;
 @synthesize emptyStarImage = _emptyStarImage;
 @synthesize delegate = _delegate;
+@synthesize multipleStars = _multipleStars;
 
 - (DYRateView *)initWithFrame:(CGRect)frame {
     return [self initWithFrame:frame fullStar:[UIImage imageNamed:DefaultFullStarImageFilename] emptyStar:[UIImage imageNamed:DefaultEmptyStarImageFilename]];
@@ -62,7 +63,35 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
         _emptyStarImage = [emptyStarImage retain];
 
         [self commonSetup];
+
+        _multipleStars = [[NSMutableArray alloc] initWithCapacity:_numOfStars];
+        [_multipleStars addObject:_emptyStarImage];
+        for (int i = 1; i < _numOfStars; i++) {
+            [_multipleStars addObject:_fullStarImage];
+        }
+
     }
+    return self;
+}
+
+-(DYRateView *)initWithFrame:(CGRect)frame size:(int)totalStars{
+    self = [super initWithFrame:frame];
+
+    if (self) {
+        self.opaque = NO;
+        self.backgroundColor = [UIColor clearColor];
+        [self commonSetup];
+        _numOfStars = totalStars;
+        _multipleStars = [[NSMutableArray alloc] initWithCapacity:totalStars];
+
+        for (int i = 0; i < totalStars; i++) {
+            [_multipleStars addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%d-star.png", i]]];
+        }
+
+        _emptyStarImage = [_multipleStars objectAtIndex:0];
+        _fullStarImage = [_multipleStars objectAtIndex:totalStars - 1];
+    }
+
     return self;
 }
 
@@ -115,21 +144,22 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
 
     float x = _origin.x;
     for(int i = 0; i < _numOfStars; i++) {
-        [_emptyStarImage drawAtPoint:CGPointMake(x, _origin.y)];
+        [[_multipleStars objectAtIndex:0] drawAtPoint:CGPointMake(x, _origin.y)];
         x += _fullStarImage.size.width + _padding;
     }
 
 
     float floor = floorf(_rate);
     x = _origin.x;
+    if (floor == _numOfStars) floor = _numOfStars - 1;
     for (int i = 0; i < floor; i++) {
-        [_fullStarImage drawAtPoint:CGPointMake(x, _origin.y)];
+        [[_multipleStars objectAtIndex:floor] drawAtPoint:CGPointMake(x, _origin.y)];
         x += _fullStarImage.size.width + _padding;
     }
 
     if (_numOfStars - floor > 0.01) {
         UIRectClip(CGRectMake(x, _origin.y, _fullStarImage.size.width * (_rate - floor), _fullStarImage.size.height));
-        [_fullStarImage drawAtPoint:CGPointMake(x, _origin.y)];
+        [[_multipleStars objectAtIndex:floor] drawAtPoint:CGPointMake(x, _origin.y)];
     }
 }
 
