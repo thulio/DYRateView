@@ -151,7 +151,6 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
 
     float floor = floorf(_rate);
     x = _origin.x;
-    if (floor == _numOfStars) floor = _numOfStars - 1;
     for (int i = 0; i < floor; i++) {
         [[_multipleStars objectAtIndex:floor] drawAtPoint:CGPointMake(x, _origin.y)];
         x += _fullStarImage.size.width + _padding;
