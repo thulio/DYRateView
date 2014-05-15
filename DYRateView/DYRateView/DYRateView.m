@@ -66,7 +66,7 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
 
         _multipleStars = [[NSMutableArray alloc] initWithCapacity:_numOfStars];
         [_multipleStars addObject:_emptyStarImage];
-        for (int i = 1; i < _numOfStars; i++) {
+        for (int i = 1; i <= _numOfStars; i++) {
             [_multipleStars addObject:_fullStarImage];
         }
 
