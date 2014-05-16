@@ -82,7 +82,7 @@ static NSString *DefaultEmptyStarImageFilename = @"StarEmpty.png";
         self.backgroundColor = [UIColor clearColor];
         [self commonSetup];
         _numOfStars = totalStars;
-        _multipleStars = [[NSMutableArray alloc] initWithCapacity:totalStars];
+        _multipleStars = [[NSMutableArray alloc] initWithCapacity:totalStars + 1];
 
         for (int i = 0; i < totalStars; i++) {
             [_multipleStars addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%d-star.png", i]]];
